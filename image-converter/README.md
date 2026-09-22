@@ -81,3 +81,7 @@ python convert.py input.png --mode v9968 --width 256 --height 212 --palette pale
 `verify_native.py` は任意の開発者向け検証です。実行する場合は、自分の画像をCLIで256×192のTMS形式へ変換し、出力先を `outputs/ai-tms-screen2` にしてください。openMSXとユーザー所有のSony HB-101 BIOSが別途必要です。通常の画像変換にエミュレーターは不要です。
 
 実機での表示は未検証。既存ゲームのROMや素材は自動で書き換えません。出力したファイルを選んで取り込む方式です。BIOSは同梱しません。
+
+## 利用について・免責事項
+
+[リポジトリ共通の利用条件・免責事項](../README.md#利用について免責事項)をご確認ください。
