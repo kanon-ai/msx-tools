@@ -1,0 +1,22 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSX Image Converter</title><link rel="stylesheet" href="/style.css"></head><body>
+<header><div><span class="eyebrow">NATIVE GRAPHICS WORKSHOP</span><h1>MSX Image Converter</h1><p>画像を、VDPが表示できるデータへ。</p></div><span class="local">LOCAL · 画像の外部送信なし</span></header>
+<main><aside>
+<label class="drop" id="drop">画像を選択 / ドロップ<input id="image-file" type="file" accept="image/*"><small id="filename">PNG・JPEG・WebPなど</small></label>
+<label>出力形式<select id="mode"><option value="tms9918a">TMS9918A · SCREEN 2 / PCG</option><option value="v9968">V9968 · 16色 / RGB555 / 4bpp</option></select></label>
+<p class="note" id="constraint">固定15色から、横8ドットの各行で2色を選びます。</p>
+<label>サイズ<select id="preset"><option value="256,192">256 × 192 · SCREEN 2</option><option value="40,64">40 × 64 · PCG小区画</option><option value="80,128">80 × 128 · PCG大区画</option><option value="256,212">256 × 212 · V9968</option><option value="256,768">256 × 768 · 縦長マップ</option><option value="custom">自由指定</option></select></label>
+<div class="twocol"><label>幅<input id="width" type="number" value="256" min="8" max="1024" step="8"></label><label>高さ<input id="height" type="number" value="192" min="8" max="4096" step="8"></label></div>
+<label>配置<select id="fit"><option value="contain">縦横比を保つ・黒で余白</option><option value="crop">中央を切り抜く</option><option value="stretch">指定寸法へ伸縮</option></select></label>
+<label>画素の縮小<select id="resample"><option value="box">面積平均 · 通常画像</option><option value="nearest">最近傍 · ドット絵</option><option value="lanczos">Lanczos · 写真</option></select></label>
+<label>輪郭を優先 <output id="edge-value">1.0</output><input id="edge" type="range" min="0" max="4" step="0.5" value="1"></label>
+<label>縮小後の輪郭強調 <output id="sharpen-value">0</output><input id="sharpen" type="range" min="0" max="150" step="25" value="0"></label>
+<section id="tms-colors"><div class="section-label">使用する固定色 <button id="all-colors" class="text-button">全色</button><button id="metal-colors" class="text-button">金属・光</button></div><div id="swatches"></div><small>色0は透明扱いのため使用しません。</small></section>
+<section id="v-palette" hidden><label>パレット<select id="palette-mode"><option value="auto">画像から16色を自動設計</option><option value="fixed">RGB555パレットを固定</option></select></label><label id="palette-upload" hidden>palette.json<input type="file" id="palette-file" accept=".json"></label><small>現在のゲーム用4bpp形式。V9968全モード共通の形式ではありません。</small></section>
+<button id="convert" class="primary" disabled>変換する</button><p id="status" role="status">画像を選択してください。</p>
+</aside><article>
+<nav><div><button class="tab selected" data-view="compare">変換前 / 変換後</button><button class="tab" data-view="error">誤差マップ</button></div><label class="zoom-label">倍率<select id="zoom"><option value="fit">画面に合わせる</option><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></label></nav>
+<div id="empty"><span>8 × 1</span><h2>制約は、変換側で保証する。</h2><p>生成画像や写真を読み込み、実際の画素と色数で比較できます。</p><p>画像の構図や足りないディテールは描き直しません。<br>仕上がりは等倍表示でも確認してください。</p></div>
+<div id="previews" hidden><div class="compare"><figure><figcaption>サイズ調整後の原画</figcaption><div class="viewport"><img id="before" alt="変換前の画像"></div></figure><figure><figcaption>VDP制約を適用した画像</figcaption><div class="viewport"><img id="after" alt="変換後の画像"></div></figure></div><div class="errors" hidden><figure><figcaption>明るいほど、変換による色の差が大きい場所</figcaption><div class="viewport"><img id="error-image" alt="色の差の分布"></div></figure></div></div>
+<section id="results" hidden><div id="metrics"></div><div id="palette-result"></div><div class="downloads"><a id="png-download" class="secondary">PNGを保存</a><a id="zip-download" class="primary">バイナリ・検証結果をZIPで保存</a></div><p class="note" id="export-note"></p></section>
+<footer>PCG: 横8ドットの各行で2色以内 / V9968: RGB各5ビット・16色 / ディザなし / 出力を再復号して検証</footer>
+</article></main><script src="/app.js"></script></body></html>
